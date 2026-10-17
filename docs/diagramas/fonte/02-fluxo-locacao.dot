@@ -1,0 +1,79 @@
+// Diagrama 2 - Fluxo da locacao: do anuncio a avaliacao mutua (conceitual)
+// Fonte: RF-004, RF-006, RF-007, RF-010, RF-011, RF-012, RF-014, RNE-001..003, RNE-007, RNE-008
+digraph fluxo_locacao {
+  graph [fontname="DejaVu Sans", rankdir=TB, nodesep=0.4, ranksep=0.27, pad=0.15,
+         splines=true, bgcolor="white", dpi=250];
+  node  [fontname="DejaVu Sans", fontsize=11, shape=box, style="rounded,filled",
+         margin="0.12,0.06", penwidth=1.3, color="#44546A", fontcolor="#0F1C2E"];
+  edge  [fontname="DejaVu Sans", fontsize=10, color="#0F1C2E", penwidth=1.2,
+         arrowsize=0.8, fontcolor="#0F1C2E"];
+
+  start [shape=circle, label="", width=0.22, style=filled, fillcolor="#0F1C2E", color="#0F1C2E"];
+  fim   [shape=doublecircle, label="", width=0.22, style=filled, fillcolor="#0F1C2E", color="#0F1C2E"];
+
+  n1  [label="Anunciante publica\num anúncio (RF-004)", fillcolor="#FDEBC8", color="#B86E00"];
+  n2  [label="Campos obrigatórios\ncompletos?\n(RNE-002 e RNE-003)",
+       shape=diamond, style="filled", margin="0.0,0.0", fillcolor="#E3E8EF"];
+  n2n [label="Anunciante completa\nos campos pendentes", fillcolor="#FDEBC8", color="#B86E00"];
+  n3  [label="Sistema publica o anúncio e o\nexibe nos resultados de busca", fillcolor="#E3E8EF"];
+
+  n4  [label="Locatário busca, filtra e abre o detalhe\ndo imóvel, com o comparativo de valores\n(RF-006, RF-007 e RF-011)",
+       fillcolor="#D4F1EC", color="#138A7A"];
+  n5  [label="Deseja contatar\no anunciante?", shape=diamond, style="filled",
+       margin="0.16,0.06", fillcolor="#D4F1EC", color="#138A7A"];
+  n6  [label="Interessado em\nalugar autenticado?\n(RNE-001)", shape=diamond, style="filled",
+       margin="0.0,0.0", fillcolor="#E3E8EF"];
+  n6n [label="Visitante vê só a listagem resumida\ne então se cadastra ou faz login\n(RNE-001; RF-001 e RF-002)", fillcolor="#D4F1EC", color="#138A7A"];
+
+  n7  [label="Locatário e anunciante trocam mensagens\npelo canal interno (RF-010); dados pessoais\nsó por ação voluntária (RNE-007)",
+       fillcolor="#D4F1EC:#FDEBC8", gradientangle=0];
+  n8  [label="A locação é concretizada entre as partes;\ncada uma registra a confirmação\nna conversa (RF-014)",
+       fillcolor="#D4F1EC:#FDEBC8", gradientangle=0];
+  n9  [label="Ambas as partes\nconfirmaram?\n(RF-014)", shape=diamond, style="filled",
+       margin="0.0,0.0", fillcolor="#E3E8EF"];
+  n9n [label="Avaliação permanece indisponível\naté a confirmação da outra parte", fillcolor="#E3E8EF"];
+  n10 [label="Sistema libera a avaliação mútua (RF-012); locatário\ne anunciante avaliam de forma independente:\nnota de 1 a 5 e comentário descritivo",
+       fillcolor="#D4F1EC:#FDEBC8", gradientangle=0];
+  n12 [label="Sistema exibe as avaliações nos perfis;\no avaliado não pode removê-las (RNE-008)",
+       fillcolor="#E3E8EF"];
+
+  start -> n1;
+  n1 -> n2;
+  n2 -> n2n [label=" Não "];
+  n2n -> n1;
+  n2 -> n3  [label=" Sim "];
+  n3 -> n6;
+  n6 -> n6n [label=" Não "];
+  n6n -> n4;
+  n6 -> n4  [label=" Sim "];
+  n4 -> n5;
+  n5 -> n4  [label=" Não: continua buscando ", constraint=false];
+  n5 -> n7  [label=" Sim "];
+  n7 -> n8 -> n9;
+  n9 -> n9n [label=" Não "];
+  n9n -> n8 [style=dashed, constraint=false, label=" aguarda "];
+  n9 -> n10 [label=" Sim "];
+  n10 -> n12;
+  n12 -> fim;
+
+  {rank=same; start; n1;}
+  {rank=same; n2; n2n;}
+  {rank=same; n6; n6n;}
+  {rank=same; n9; n9n;}
+  {rank=same; n12; fim;}
+
+  // legenda horizontal
+  subgraph cluster_leg {
+    label="Legenda"; labeljust=l; fontname="DejaVu Sans"; fontsize=10; style="rounded"; color="#44546A";
+    l1 [label="Anunciante", fillcolor="#FDEBC8", color="#B86E00", fontsize=9];
+    l2 [label="Locatário (ou visitante)", fillcolor="#D4F1EC", color="#138A7A", fontsize=9];
+    l3 [label="Sistema", fillcolor="#E3E8EF", fontsize=9];
+    l4 [label="Ambas as partes", fillcolor="#D4F1EC:#FDEBC8", gradientangle=0, fontsize=9];
+    {rank=same; l1; l2;}
+    {rank=same; l3; l4;}
+    l1 -> l2 [style=invis];
+    l3 -> l4 [style=invis];
+    l1 -> l3 [style=invis];
+  }
+  n12 -> l1 [style=invis];
+}
