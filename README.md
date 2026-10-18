@@ -8,7 +8,7 @@ O Roomy ataca dois problemas do aluguel tradicional: a falta de informação do 
 
 ## Protótipo
 
-[Protótipo no Figma](https://www.figma.com/design/jrnaVjc9PbkQ6F5huaHSVz/Roomy---Prot%C3%B3tipo-Entrega-Fase-1?node-id=10-2&t=jfYakpNlGEaGiKjd-1)
+[Protótipo no Figma][(https://www.figma.com/design/7SJaZPapxuv4i1idqwsmSz.)] 
 
 ## Estrutura do repositório
 
