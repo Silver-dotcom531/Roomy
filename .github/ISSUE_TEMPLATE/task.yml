@@ -1,0 +1,12 @@
+name: Tarefa
+description: Tarefa do backlog do Roomy
+body:
+  - type: input
+    id: id
+    attributes: { label: ID da tarefa (T-0xx), placeholder: T-010 }
+  - type: input
+    id: req
+    attributes: { label: Requisitos, placeholder: RF-001, RNE-001 }
+  - type: textarea
+    id: pronto
+    attributes: { label: Pronto quando }

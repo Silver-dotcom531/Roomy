@@ -1,0 +1,13 @@
+{
+  "name": "roomy",
+  "private": true,
+  "description": "Roomy — monorepo (frontend e backend independentes; ver docs/adr/0001-stack.md)",
+  "scripts": {
+    "gates": "node scripts/gates.mjs",
+    "gates:fast": "node scripts/gates.mjs --fast",
+    "loop": "node scripts/run-loop.mjs"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.3"
+  }
+}

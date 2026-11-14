@@ -1,0 +1,19 @@
+name: CI
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop]
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm install --no-audit --no-fund
+      - run: |
+          for d in backend frontend; do
+            if [ -f "$d/package.json" ]; then (cd "$d" && npm ci --no-audit --no-fund); fi
+          done
+      - run: node scripts/gates.mjs --fast
